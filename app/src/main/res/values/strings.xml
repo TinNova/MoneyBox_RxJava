@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MoneyBox</string>
+
+    <!-- DetailActivity -->
+    <string name="deposit_moneybox">Add £10 to my Moneybox</string>
+    <string name="detailActivity_title">Your Moneybox: £</string>
+
+</resources>

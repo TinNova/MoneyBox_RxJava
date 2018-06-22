@@ -1,0 +1,27 @@
+package com.example.tin.moneybox.serverConnection;
+
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
+
+public class RetryWithSessionRefresh implements Function<Observable<? extends Throwable>, Observable<?>> {
+
+    private String TAG = "RetrySession";
+
+    private final SessionService sessionSerivce;
+    private int maxRetries = 3;
+    private int delay = 2000;
+
+    //TODO: When is this method called? What does it do?
+    public RetryWithSessionRefresh(SessionService sessionSerivce) {
+        this.sessionSerivce = sessionSerivce;
+    }
+
+    @Override
+    public Observable<?> apply(Observable<? extends Throwable> attempts) {
+
+        // If this fails after 3 attempts it will be sent to onError which is in the LoginActivity/Presenter
+        return attempts
+                .flatMap((Function<Throwable, Observable<?>>) throwable -> sessionSerivce.observeToken()
+                        .retryWhen(new RetryWithDelay(maxRetries, delay)));
+    }
+}
