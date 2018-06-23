@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import com.example.tin.moneybox.ProductPositionListener;
 import com.example.tin.moneybox.R;
-import com.example.tin.moneybox.models.Product;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;

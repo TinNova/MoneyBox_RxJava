@@ -6,7 +6,6 @@ import android.widget.Toast;
 import com.example.tin.moneybox.serverConnection.RestService;
 import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
-import com.example.tin.moneybox.utils.UrlUtils;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,10 +26,8 @@ public class MainPresenter implements MainContract.MainPresenter {
     @Override
     public void getThisWeekResponse(MainActivity context) {
 
-        String thisWeekUrl = UrlUtils.getThisWeekUrl();
-
-                /* This is getting the Products list, should be moved to MainPresenter
-            This is called on a successful or failed endpoint connection */
+        /* This is getting the Products list, should be moved to MainPresenter
+           This is called on a successful or failed endpoint connection */
         RestService.getInstance(context)
                 .getProducts()
                 // Above we are:

@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tin.moneybox.models.Product;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;

@@ -2,15 +2,11 @@ package com.example.tin.moneybox;
 
 import android.util.Log;
 
-import com.example.tin.moneybox.models.Product;
-import com.example.tin.moneybox.network.NetworkConnection;
-import com.example.tin.moneybox.network.NetworkListener;
 import com.example.tin.moneybox.serverConnection.RestService;
 import com.example.tin.moneybox.serverConnection.body.PaymentBody;
 import com.example.tin.moneybox.serverConnection.response.OneOffPaymentResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.utils.Const;
-import com.example.tin.moneybox.utils.UrlUtils;
 
 import java.util.ArrayList;
 

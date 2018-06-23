@@ -4,16 +4,10 @@ package com.example.tin.moneybox;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.tin.moneybox.models.User;
-import com.example.tin.moneybox.network.NetworkConnection;
-import com.example.tin.moneybox.network.NetworkListener;
 import com.example.tin.moneybox.serverConnection.RestService;
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 import com.example.tin.moneybox.utils.Const;
-import com.example.tin.moneybox.utils.UrlUtils;
-
-import java.util.ArrayList;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,7 +35,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
         /* RxJava of Retrofit Method for login, this logs user in */
         RestService.getInstance(context)
-                .login(new LoginBody(Const.EMAIL, Const.PASS, NetworkConnection.IDFA_VALUE))
+                .login(new LoginBody(Const.EMAIL, Const.PASS, Const.IDFA_VALUE))
                 // Above we are:
                 // 1. Calling .login, an observable
                 // 2. Creating a new instance of the LoginBody and passing in the Username and Password the user inserted and the IDFA

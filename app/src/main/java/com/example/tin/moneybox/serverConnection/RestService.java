@@ -138,7 +138,7 @@ public class RestService {
 
     public Observable<OneOffPaymentResponse> payment(PaymentBody paymentBody) {
 
-        return INSTANCE.payment(paymentBody);
+        return INSTANCE.payment(paymentBody).retryWhen(new RetryWithSessionRefresh(sessionSerivce));
     }
 
 }

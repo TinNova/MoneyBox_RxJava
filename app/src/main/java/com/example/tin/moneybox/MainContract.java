@@ -1,7 +1,5 @@
 package com.example.tin.moneybox;
 
-import com.example.tin.moneybox.models.Product;
-import com.example.tin.moneybox.models.User;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;

@@ -1,7 +1,5 @@
 package com.example.tin.moneybox.serverConnection;
 
-import com.example.tin.moneybox.models.Product;
-import com.example.tin.moneybox.models.User;
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
 import com.example.tin.moneybox.serverConnection.body.PaymentBody;
 import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
@@ -9,14 +7,10 @@ import com.example.tin.moneybox.serverConnection.response.OneOffPaymentResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Query;
 
 public interface ApiMethods {
 

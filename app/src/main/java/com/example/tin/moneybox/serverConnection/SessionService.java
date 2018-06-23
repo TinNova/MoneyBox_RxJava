@@ -1,7 +1,6 @@
 package com.example.tin.moneybox.serverConnection;
 
 
-import com.example.tin.moneybox.network.NetworkConnection;
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 import com.example.tin.moneybox.utils.Const;
@@ -24,7 +23,7 @@ public class SessionService {
     public Observable<UserResponse> observeToken() {
         // Modify to return an Observable that when subscribed to
         // will make the network request to get the Session cookie.
-        return apiMethods.loginUser(new LoginBody(Const.EMAIL, Const.PASS, NetworkConnection.IDFA_VALUE))
+        return apiMethods.loginUser(new LoginBody(Const.EMAIL, Const.PASS, Const.IDFA_VALUE))
                 .map(user -> {
 
                     //here we saving user BearerToken on succesfull login
