@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         super.onResume();
 
         /* Called when user returns to MainActivity from DetailActivity, it ensures data is updated */
-        //mainPresenter.getThisWeekResponse(MainActivity.this, mUser);
+        mainPresenter.getThisWeekResponse(MainActivity.this);
 
         Log.d(TAG, "MAIN ACTIVITY onResume");
 

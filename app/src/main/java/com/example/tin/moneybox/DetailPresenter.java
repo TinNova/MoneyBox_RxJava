@@ -5,10 +5,19 @@ import android.util.Log;
 import com.example.tin.moneybox.models.Product;
 import com.example.tin.moneybox.network.NetworkConnection;
 import com.example.tin.moneybox.network.NetworkListener;
+import com.example.tin.moneybox.serverConnection.RestService;
+import com.example.tin.moneybox.serverConnection.body.PaymentBody;
+import com.example.tin.moneybox.serverConnection.response.OneOffPaymentResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
+import com.example.tin.moneybox.utils.Const;
 import com.example.tin.moneybox.utils.UrlUtils;
 
 import java.util.ArrayList;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class DetailPresenter implements DetailContract.DetailPresenter {
@@ -39,17 +48,60 @@ public class DetailPresenter implements DetailContract.DetailPresenter {
     @Override
     public void depositMoney(DetailActivity context) {
 
-        String oneOffPaymentsUrl = UrlUtils.getOneOffPaymentsUrl();
+        /* RxJava of Retrofit Method for login, this logs user in */
+        RestService.getInstance(context)
+                .payment(new PaymentBody(Const.PAYMENT, investorProductId))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<OneOffPaymentResponse>() {
 
-        /* Use the String URL "loginUrl" to request the JSON from the server and parse it */
-        NetworkConnection.getInstance(context).getOneOffPaymentsResponseFromHttpUrl(oneOffPaymentsUrl, investorProductId, new NetworkListener.OneOffPaymentListener() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-            @Override
-            public void getResponse(int amountInMoneybox) {
+                    }
 
-                detailScreen.updateMoneyBox(amountInMoneybox);
-            }
-        });
+                    @Override
+                    public void onNext(OneOffPaymentResponse oneOffPaymentResponse) {
+
+                        detailScreen.updateMoneyBox(oneOffPaymentResponse.getMoneybox());
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                        // Called when we have an error in the response
+                        // Here you can place a Toast message "Incorrect password" or "No internet data"
+                        Log.e(TAG, "error = " + Log.getStackTraceString(e));
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+//        String oneOffPaymentsUrl = UrlUtils.getOneOffPaymentsUrl();
+//
+//        /* Use the String URL "loginUrl" to request the JSON from the server and parse it */
+//        NetworkConnection.getInstance(context).getOneOffPaymentsResponseFromHttpUrl(oneOffPaymentsUrl, investorProductId, new NetworkListener.OneOffPaymentListener() {
+//
+//            @Override
+//            public void getResponse(int amountInMoneybox) {
+//
+//                detailScreen.updateMoneyBox(amountInMoneybox);
+//            }
+//        });
 
     }
 }

@@ -3,7 +3,9 @@ package com.example.tin.moneybox.serverConnection;
 import com.example.tin.moneybox.models.Product;
 import com.example.tin.moneybox.models.User;
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
+import com.example.tin.moneybox.serverConnection.body.PaymentBody;
 import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
+import com.example.tin.moneybox.serverConnection.response.OneOffPaymentResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 
@@ -27,4 +29,8 @@ public interface ApiMethods {
 
     @POST("/users/logout")
     Observable<LogoutResponse> logOut();
+
+    @POST("/oneoffpayments")
+    Observable<OneOffPaymentResponse> payment(@Body PaymentBody paymentBody);
+
 }

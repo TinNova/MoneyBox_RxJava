@@ -9,38 +9,6 @@ public class UserResponse implements Parcelable {
     public Session Session;
     public UserModel User;
 
-    protected UserResponse(Parcel in) {
-    }
-
-    public static final Creator<UserResponse> CREATOR = new Creator<UserResponse>() {
-        @Override
-        public UserResponse createFromParcel(Parcel in) {
-            return new UserResponse(in);
-        }
-
-        @Override
-        public UserResponse[] newArray(int size) {
-            return new UserResponse[size];
-        }
-    };
-
-    @Override
-    public String toString() {
-        return "UserResponse{" +
-                "Session=" + Session +
-                ", User=" + User +
-                '}';
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-    }
-
 
     /* Within the Session JsonObject, the values we want to take*/
     public static class Session {
@@ -90,5 +58,40 @@ public class UserResponse implements Parcelable {
 
     public UserModel getUserModel() {
         return User;
+    }
+
+
+
+
+    protected UserResponse(Parcel in) {
+    }
+
+    public static final Creator<UserResponse> CREATOR = new Creator<UserResponse>() {
+        @Override
+        public UserResponse createFromParcel(Parcel in) {
+            return new UserResponse(in);
+        }
+
+        @Override
+        public UserResponse[] newArray(int size) {
+            return new UserResponse[size];
+        }
+    };
+
+    @Override
+    public String toString() {
+        return "UserResponse{" +
+                "Session=" + Session +
+                ", User=" + User +
+                '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
     }
 }

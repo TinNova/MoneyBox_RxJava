@@ -5,7 +5,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
+import com.example.tin.moneybox.serverConnection.body.PaymentBody;
 import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
+import com.example.tin.moneybox.serverConnection.response.OneOffPaymentResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 
@@ -20,12 +22,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * The main idea that with RX you can react on failed execution, and you able to retry your initial
  * call
- *
+ * <p>
  * So you need to add {@link RetryWithSessionRefresh} to each your call, because each of your call can
  * receive 401, or whatever 400 error
- *
+ * <p>
  * Based on that, retryWhen() of {@link Observable} works on failed execution
- *
+ * <p>
  * We launch our {@link RetryWithSessionRefresh} on error which has 2 constants, max retries and delay
  * It has also it own {@link RetryWithDelay} which allows us to wait 2 seconds before next attempt for login
  * also this observable call {@link SessionService}
@@ -107,7 +109,7 @@ public class RestService {
                      * because every header has the same name ".names()" */
                     for (String name : newRequest.headers().names()) {
 
-                        Log.d(TAG, newRequest.url().toString() + " name " + name  + " val " + newRequest.headers().get(name));
+                        Log.d(TAG, newRequest.url().toString() + " name " + name + " val " + newRequest.headers().get(name));
 
                     }
                     return chain.proceed(newRequest);
@@ -132,6 +134,11 @@ public class RestService {
     public Observable<LogoutResponse> logOut() {
 
         return INSTANCE.logOut();
+    }
+
+    public Observable<OneOffPaymentResponse> payment(PaymentBody paymentBody) {
+
+        return INSTANCE.payment(paymentBody);
     }
 
 }
