@@ -3,18 +3,15 @@ package com.example.tin.moneybox;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.tin.moneybox.models.User;
-import com.example.tin.moneybox.network.NetworkConnection;
-import com.example.tin.moneybox.network.NetworkListener;
 import com.example.tin.moneybox.serverConnection.RestService;
+import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.utils.UrlUtils;
-
-import java.util.ArrayList;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class MainPresenter implements MainContract.MainPresenter {
@@ -104,24 +101,38 @@ public class MainPresenter implements MainContract.MainPresenter {
     @Override
     public void startLogOut(MainActivity context) {
 
-        String logoutUrl = UrlUtils.getLogoutUrl();
-
-        //TODO: Implement Logout
         Toast.makeText(context, "logout...", Toast.LENGTH_SHORT).show();
 
+        RestService.getInstance(context)
+                .logOut()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<LogoutResponse>() {
 
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-        //TODO: CHECK IF TOKEN HAS EXPIRED BEFORE TRYING TO LOGOUT
-        /* Use the String URL "logoutUrl" to request the JSON from the server and parse it */
-        NetworkConnection.getInstance(context).getLogOutResponseFromHttpUrl(logoutUrl, new NetworkListener.LogoutListener() {
+                    }
 
-            @Override
-            public void getResponse(String string) {
+                    @Override
+                    public void onNext(LogoutResponse logoutResponse) {
 
-                Log.v(TAG, "Logout Successful: " + string);
+                        Log.d(TAG, "Logout Success ");
+                        mainScreen.logout();
+                    }
 
-                mainScreen.logout();
-            }
-        });
+                    @Override
+                    public void onError(Throwable throwable) {
+
+                        //TODO: HTTP Returns 200 but it always lands here in onError
+                        Log.e(TAG, "Logout Error !!! " + Log.getStackTraceString(throwable));
+                        mainScreen.logout();
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
+import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 
@@ -117,7 +118,7 @@ public class RestService {
     /* Returning the message from the server (whether succesful or otherwise)
     * This is sent to the code that started the connection within onError or onNext for example. */
     public Observable<UserResponse> login(LoginBody loginBody) {
-        // Here we recieve the response, (which is the UserReponse which is already parsed when it arrives here,
+        // Here we receive the response, (which is the UserReponse which is already parsed when it arrives here,
         // We don't do anything with it here, we just return it.
         return INSTANCE.loginUser(loginBody);
     }
@@ -126,6 +127,11 @@ public class RestService {
 
         // Here we are inserting .retryWhen() this is to handle an instance of an error being returned
         return INSTANCE.getProducts().retryWhen(new RetryWithSessionRefresh(sessionSerivce));
+    }
+
+    public Observable<LogoutResponse> logOut() {
+
+        return INSTANCE.logOut();
     }
 
 }

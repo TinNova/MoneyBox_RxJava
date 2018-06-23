@@ -37,9 +37,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
         Log.d(TAG, "email & password: " + email + ", " + pass);
 
-        String loginUrl = UrlUtils.getLoginUrl();
-        // Show Loading Screen
-
+        //TODO: Show Loading Screen
 
         /* RxJava of Retrofit Method for login, this logs user in */
         RestService.getInstance(context)
@@ -95,18 +93,5 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
                     }
                 });
-
-        /** Old Volley Code */
-        /* Use the String URL "loginUrl" to request the JSON from the server and parse it */
-//        NetworkConnection.getInstance(context).getLoginResponseFromHttpUrl(loginUrl, email, pass, new NetworkListener.LoginListener() {
-//
-//            @Override
-//            public void getResponse(ArrayList<User> user) {
-//
-//                loginScreen.launchMainActivity(user);
-//
-//            }
-//        });
     }
-
 }

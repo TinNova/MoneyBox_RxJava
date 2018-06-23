@@ -13,7 +13,6 @@ public class SessionService {
     ApiMethods apiMethods;
     SavedPreferencesInteractor savedPrefInteractor;
 
-    //TODO: When is this method called? What does it do?
     public SessionService(ApiMethods apiMethods, SavedPreferencesInteractor savedPrefInteractor) {
 
         this.apiMethods = apiMethods;

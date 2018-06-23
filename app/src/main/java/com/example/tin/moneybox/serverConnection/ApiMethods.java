@@ -3,6 +3,7 @@ package com.example.tin.moneybox.serverConnection;
 import com.example.tin.moneybox.models.Product;
 import com.example.tin.moneybox.models.User;
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
+import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 
@@ -23,4 +24,7 @@ public interface ApiMethods {
 
     @GET("/investorproduct/thisweek")
     Observable<ProductResponse> getProducts();
+
+    @POST("/users/logout")
+    Observable<LogoutResponse> logOut();
 }
