@@ -60,8 +60,9 @@ public class MainPresenter implements MainContract.MainPresenter {
                     @Override
                     public void onNext(ProductResponse productResponse) {
 
-                        Log.d(TAG, "successful load of products " + productResponse);
-                        //mainScreen.showProducts(products);
+                        Log.d(TAG, "successful load of products " + productResponse.getProducts());
+
+                        mainScreen.showProducts(productResponse.getProducts());
 
                     }
 
@@ -107,6 +108,8 @@ public class MainPresenter implements MainContract.MainPresenter {
 
         //TODO: Implement Logout
         Toast.makeText(context, "logout...", Toast.LENGTH_SHORT).show();
+
+
 
         //TODO: CHECK IF TOKEN HAS EXPIRED BEFORE TRYING TO LOGOUT
         /* Use the String URL "logoutUrl" to request the JSON from the server and parse it */

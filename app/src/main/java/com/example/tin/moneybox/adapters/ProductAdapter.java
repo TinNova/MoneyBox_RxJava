@@ -11,20 +11,21 @@ import android.widget.Button;
 import com.example.tin.moneybox.ProductPositionListener;
 import com.example.tin.moneybox.R;
 import com.example.tin.moneybox.models.Product;
+import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;
 
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
-    private ArrayList<Product> mProducts;
+    private ArrayList<ProductResponse.ProductModel> mProducts;
     private final Context context;
 
     private ProductPositionListener productPositionListener;
 
     /* Constructor:
      * Pass in the StationPositionListener Interface into the Adapter on construction */
-    public ProductAdapter(ArrayList<Product> products, Context context, ProductPositionListener listener) {
+    public ProductAdapter(ArrayList<ProductResponse.ProductModel> products, Context context, ProductPositionListener listener) {
         this.mProducts = products;
         this.context = context;
         this.productPositionListener = listener;
@@ -32,7 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     }
 
     // We are passing the station data via a method, not when the Adapter is created
-    public void setProducts(ArrayList<Product> products) {
+    public void setProducts(ArrayList<ProductResponse.ProductModel> products) {
         this.mProducts = products;
         notifyDataSetChanged();
     }
@@ -50,9 +51,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
 
-        Product product = mProducts.get(position);
+        ProductResponse.ProductModel product = mProducts.get(position);
 
-        viewHolder.btnProduct.setText(product.getFriendlyName());
+        viewHolder.btnProduct.setText(product.getInvestorProductType());
     }
 
     @Override

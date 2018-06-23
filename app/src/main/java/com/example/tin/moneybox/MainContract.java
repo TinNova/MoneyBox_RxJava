@@ -2,6 +2,7 @@ package com.example.tin.moneybox;
 
 import com.example.tin.moneybox.models.Product;
 import com.example.tin.moneybox.models.User;
+import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ public interface MainContract {
 
     interface MainScreen {
 
-        void showProducts(ArrayList<Product> products);
+        void showProducts(ArrayList<ProductResponse.ProductModel> products);
 
         void logout();
     }

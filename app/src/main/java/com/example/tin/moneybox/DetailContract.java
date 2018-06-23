@@ -1,12 +1,9 @@
 package com.example.tin.moneybox;
 
-import com.example.tin.moneybox.models.Product;
+import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;
 
-/**
- * Created by Tin on 18/06/2018.
- */
 
 public interface DetailContract {
 
@@ -19,7 +16,7 @@ public interface DetailContract {
 
     interface DetailPresenter {
 
-        void prepareArrayListData(ArrayList<Product> mProducts, int position);
+        void prepareArrayListData(ArrayList<ProductResponse.ProductModel> mProducts, int position);
 
         void depositMoney(DetailActivity context);
 

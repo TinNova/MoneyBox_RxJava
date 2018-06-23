@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.tin.moneybox.models.Product;
 import com.example.tin.moneybox.network.NetworkConnection;
 import com.example.tin.moneybox.network.NetworkListener;
+import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.utils.UrlUtils;
 
 import java.util.ArrayList;
@@ -23,12 +24,12 @@ public class DetailPresenter implements DetailContract.DetailPresenter {
     int investorProductId;
 
     @Override
-    public void prepareArrayListData(ArrayList<Product> mProducts, int position) {
+    public void prepareArrayListData(ArrayList<ProductResponse.ProductModel> mProducts, int position) {
 
-        Product product = mProducts.get(position);
+        ProductResponse.ProductModel product = mProducts.get(position);
 
         int moneybox = product.getMoneybox();
-        String productFriendlyName = product.getFriendlyName();
+        String productFriendlyName = product.getInvestorProductType();
         investorProductId = product.getInvestorProductId();
 
         detailScreen.populateDetailView(moneybox, productFriendlyName);

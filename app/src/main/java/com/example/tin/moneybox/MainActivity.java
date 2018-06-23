@@ -2,6 +2,7 @@ package com.example.tin.moneybox;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.tin.moneybox.adapters.ProductAdapter;
 import com.example.tin.moneybox.models.Product;
+import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;
 
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     private RecyclerView mRecyclerView;
     private ProductAdapter mAdapter;
     /* Used for savedInstanceState */
-    private ArrayList<Product> mProducts;
+    private ArrayList<ProductResponse.ProductModel> mProducts;
     String mUser;
     String mSession;
 
@@ -101,7 +103,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     }
 
     @Override
-    public void showProducts(ArrayList<Product> products) {
+    public void showProducts(ArrayList<ProductResponse.ProductModel> products) {
+
         mProducts = products;
         mAdapter.setProducts(products);
         //hideLoading();
@@ -118,10 +121,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     @Override
     public void btnProductClick(View v, int position) {
 
-        //TODO: The reason we have created the ProductPositionListener class I think is because
-        //TODO..the data is passed into the Adapter after the Adapter and RecyclerView has been created
-        //TODO..to solve this, can we try creating the Adapter and RecyclerView within the method showProducts
-        //TODO..instead of within onCreate?
         Log.d(TAG, "Item Position: " + position);
 
 

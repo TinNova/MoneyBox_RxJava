@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tin.moneybox.models.Product;
+import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     private DetailPresenter detailPresenter;
 
-    private ArrayList<Product> mProducts;
+    private ArrayList<ProductResponse.ProductModel> mProducts;
 
     int positionClicked;
 
