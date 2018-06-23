@@ -20,7 +20,7 @@ public interface MainContract {
 
     interface MainPresenter {
 
-        void getThisWeekResponse(MainActivity mainActivity, ArrayList<User> user);
+        void getThisWeekResponse(MainActivity mainActivity);
 
         void startLogOut(MainActivity mainActivity);
     }

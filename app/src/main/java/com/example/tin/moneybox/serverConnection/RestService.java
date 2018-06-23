@@ -45,7 +45,7 @@ public class RestService {
         if (INSTANCE == null) {
 
             restService = new RestService();
-            savedPrefInteractor = new SavedPreferencesInteractor((Application) application);
+            savedPrefInteractor = new SavedPreferencesInteractor(application);
 
             Retrofit retrofit = new Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

@@ -17,7 +17,7 @@ public class SavedPreferencesInteractor {
     private static final String TOKEN = "BearerToken";
     private SharedPreferences sharedPreferences;
 
-    public SavedPreferencesInteractor(Application application) {
+    public SavedPreferencesInteractor(Context application) {
 
         sharedPreferences = application.getSharedPreferences("ME_PREFS", Context.MODE_PRIVATE);
     }

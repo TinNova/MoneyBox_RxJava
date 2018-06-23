@@ -16,11 +16,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.LoginScreen {
 
+    private static final String TAG = LoginActivity.class.getSimpleName();
+
     /* Key for Intent */
+    public static String USER_FIRST_NAME = "user_first_name";
     public static String USER_DATA_USER = "user_data_user";
     public static String USER_DATA_SESSION = "user_data_session";
-
-    String TAG = "AAA";
+    public static String SESSION_TOKEN = "session_token";
 
     private LoginPresenter loginPresenter;
 
@@ -55,32 +57,24 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
             }
         });
 
-
-        /* This is getting the Products list, should be moved to MainPresenter
-            This is called on a successful or failed endpoint connection */
-        RestService.getInstance(getApplication()).getProducts()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(product -> { //Lambda code, it is the same as the above @overide onSubscribe ect...
-
-                    Log.d(TAG, "successul load of products " + product);
-                }, throwable -> {
-                    Log.e(TAG, "error while load products " + Log.getStackTraceString(throwable));
-                });
+//        /* This is getting the Products list, should be moved to MainPresenter
+//            This is called on a successful or failed endpoint connection */
+//        RestService.getInstance(getApplication()).getProducts()
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(product -> { //Lambda code, it is the same as the above @overide onSubscribe ect...
+//
+//                    Log.d(TAG, "successul load of products " + product);
+//                }, throwable -> {
+//                    Log.e(TAG, "error while load products " + Log.getStackTraceString(throwable));
+//                });
     }
 
     @Override
-    public void launchMainActivity(UserResponse user) {
-
-        Log.d(TAG,"WHAT IS THIS?? " + user.getUserModel());
-        Log.d(TAG, "WHAT IS THIS 2?? " + user.getSession());
-        Log.d(TAG, "WHAT IS THIS 3?? " + user);
-
-        // The user data is provided as a Json by Retrofit
+    public void launchMainActivity(String userFirstName, String sessionToken) {
 
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(USER_DATA_USER, String.valueOf(user.getUser()));
-        intent.putExtra(USER_DATA_SESSION, String.valueOf(user.getSession()));
-
+        intent.putExtra(USER_FIRST_NAME, userFirstName);
+        intent.putExtra(SESSION_TOKEN, sessionToken);
 
         startActivity(intent);
     }

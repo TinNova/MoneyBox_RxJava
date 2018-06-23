@@ -9,7 +9,7 @@ public interface LoginContract {
 
     interface LoginScreen {
 
-        void launchMainActivity(UserResponse user);
+        void launchMainActivity(String firstName, String sessionToken);
     }
 
 

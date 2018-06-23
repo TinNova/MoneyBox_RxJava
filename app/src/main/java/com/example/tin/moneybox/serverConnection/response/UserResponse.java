@@ -60,7 +60,7 @@ public class UserResponse implements Parcelable {
     }
 
     /* Within the User JsonObject, the values we want to take*/
-    private class UserModel {
+    public static class UserModel {
 
         public String LastName;
 

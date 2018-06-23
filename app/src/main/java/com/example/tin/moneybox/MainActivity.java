@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     String firstName;
     String lastName;
     String title;
+    String token;
 
     private Button logOutButton;
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(TAG, "MAIN ACTIVITY onStart");
+        Log.d(TAG, "MAIN ACTIVITY onCreate");
 
 
         mainPresenter = new MainPresenter(this);
@@ -68,20 +69,20 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         Intent getIntent = getIntent();
 
         if (getIntent != null) {
-            mUser = getIntent.getStringExtra(LoginActivity.USER_DATA_USER);
-            mSession = getIntent.getStringExtra(LoginActivity.USER_DATA_SESSION);
+            firstName = getIntent.getStringExtra(LoginActivity.USER_FIRST_NAME);
+            /**
+            * Token is not required here as it is saved in sharedPreferences, try follow to the code
+            * to understand where and when it is saved.
+            */
+            //token = getIntent.getStringExtra(LoginActivity.SESSION_TOKEN);
+            //Log.d(TAG, "mUsers: " + token);
+            Log.d(TAG, "mUsers: " + firstName);
 
-            Log.d(TAG, "mUsers: " + mUser);
-            Log.d(TAG, "mUsers: " + mSession);
+            title = "Welcome back, " + " " + firstName;
 
+            setTitle(title);
 
-//            firstName = mUser.get(0).getUserFirstName();
-//            lastName = mUser.get(0).getUserLastName();
-//            title = "Welcome, " + " " + firstName + " " + lastName;
-//
-//            setTitle(title);
-
-            //mainPresenter.getThisWeekResponse(MainActivity.this, mUser);
+            mainPresenter.getThisWeekResponse(MainActivity.this);
 
         } else {
             Toast.makeText(this, "Error loading data, please try again.", Toast.LENGTH_SHORT).show();

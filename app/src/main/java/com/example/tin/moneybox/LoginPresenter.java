@@ -72,10 +72,14 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
                     @Override
                     public void onNext(UserResponse userResponse) {
                         // Called when we have a successful response
+                        /* The user data is provided as a Json by Retrofit */
 
-                        // 1. The User Model (Here titled "UserResponse" is returned)
                         Log.d(TAG, "successful logged user " + userResponse);
-                        loginScreen.launchMainActivity(userResponse);
+
+                        String userFirstName = userResponse.getUserModel().getFirstName();
+                        String sessionToken = userResponse.getSession().getBearerToken();
+
+                        loginScreen.launchMainActivity(userFirstName, sessionToken);
                     }
 
                     @Override
@@ -92,6 +96,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
                     }
                 });
 
+        /** Old Volley Code */
         /* Use the String URL "loginUrl" to request the JSON from the server and parse it */
 //        NetworkConnection.getInstance(context).getLoginResponseFromHttpUrl(loginUrl, email, pass, new NetworkListener.LoginListener() {
 //
