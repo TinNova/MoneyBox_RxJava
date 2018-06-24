@@ -1,8 +1,20 @@
 <resources>
     <string name="app_name">MoneyBox</string>
 
+    <!-- LoginActivity -->
+
     <!-- DetailActivity -->
     <string name="deposit_moneybox">Add £10 to my Moneybox</string>
     <string name="detailActivity_title">Your Moneybox: £</string>
+
+    <!-- dialog_logout-->
+    <string name="dialog_logout_description">Are you sure you want to exit the app? \n
+        You will be logged out automatically.</string>
+    <string name="dialog_logout_title">You Are Exiting The App</string>
+    <string name="dialog_logout_logout_btn">Logout</string>
+    <string name="dialog_logout_cancel_btn">Cancel</string>
+
+    <!-- Session Time Out Message -->
+    <string name="session_timed_out">Session Timed Out, Login To Continue</string>
 
 </resources>

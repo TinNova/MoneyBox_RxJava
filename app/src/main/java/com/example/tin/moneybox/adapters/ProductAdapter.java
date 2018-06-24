@@ -52,7 +52,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
         ProductResponse.ProductModel product = mProducts.get(position);
 
-        viewHolder.btnProduct.setText(product.getInvestorProductType());
+        viewHolder.btnProduct.setText(product.Product.FriendlyName);
     }
 
     @Override

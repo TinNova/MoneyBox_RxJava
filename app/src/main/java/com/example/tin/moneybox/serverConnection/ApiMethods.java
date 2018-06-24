@@ -2,7 +2,6 @@ package com.example.tin.moneybox.serverConnection;
 
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
 import com.example.tin.moneybox.serverConnection.body.PaymentBody;
-import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
 import com.example.tin.moneybox.serverConnection.response.OneOffPaymentResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
@@ -27,7 +26,7 @@ public interface ApiMethods {
     Observable<ProductResponse> getProducts();
 
     @POST("/users/logout")
-    Completable logOut(); // Completable is used when there a response doesn't matter
+    Completable logOut(); // Completable is used when a response isn't required
 
     @POST("/oneoffpayments")
     Observable<OneOffPaymentResponse> payment(@Body PaymentBody paymentBody);

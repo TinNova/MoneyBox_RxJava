@@ -89,21 +89,6 @@ public class ProductResponse {
                     '}';
         }
 
-//        @Override
-//        public String toString() {
-//            return "ProductModel{" +
-//                    "InvestorProductId=" + InvestorProductId +
-//                    "InvestorProductType=" + InvestorProductType +
-//                    "ProductId=" + ProductId +
-//                    "moneybox=" + Moneybox +
-//                    "SubscriptionAmount=" + SubscriptionAmount +
-//                    "PlanValue=" + PlanValue +
-//                    "Sytd=" + Sytd +
-//                    "MaximumDeposit=" + MaximumDeposit +
-//                    "Product{" +
-//                    "FriendlyName=" + FriendlyName +
-//                    '}' + '}';
-//        }
 
         public int getInvestorProductId() {
             return InvestorProductId;

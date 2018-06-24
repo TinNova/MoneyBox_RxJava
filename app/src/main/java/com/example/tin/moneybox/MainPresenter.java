@@ -5,7 +5,6 @@ import android.widget.Toast;
 
 import com.example.tin.moneybox.serverConnection.RestService;
 import com.example.tin.moneybox.serverConnection.SavedPreferencesInteractor;
-import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import io.reactivex.CompletableObserver;
@@ -95,7 +94,7 @@ public class MainPresenter implements MainContract.MainPresenter {
 
                     @Override
                     public void onComplete() {
-//TODO: When a user logs out, I want to clear the Token, but I'm unable to interact with the SharePref,
+                        //TODO: When a user logs out, I want to clear the Token, but I'm unable to interact with the SharePref,
                         //TODO...If you uncomment the code you'll see it crashes
                         Log.d(TAG, "onComplete Logout ");
                         mainScreen.logout();
@@ -105,7 +104,7 @@ public class MainPresenter implements MainContract.MainPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-//TODO: HTTP Returns 200 but it always lands here in onError
+                        //TODO: HTTP Returns 200 but it always lands here in onError
                         Log.e(TAG, "onError Logout !!! " + Log.getStackTraceString(e));
                         savedPrefInteractor.saveToken("");
                         Log.d(TAG, "TOKEN ON LOGOUT onError:" + savedPrefInteractor.getToken());

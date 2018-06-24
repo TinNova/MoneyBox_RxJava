@@ -18,9 +18,6 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by Tin on 24/06/2018.
- */
 
 public class TokenInterceptor implements Interceptor {
 

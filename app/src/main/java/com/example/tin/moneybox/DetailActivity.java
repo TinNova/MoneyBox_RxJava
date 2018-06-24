@@ -26,7 +26,6 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
     TextView moneyboxTv;
     Button depositBtn;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +53,9 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
                     detailPresenter.depositMoney(DetailActivity.this);
                 }
             });
-
         } else {
             Toast.makeText(this, "Error loading data, please try again.", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     @Override
@@ -68,7 +64,6 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         //moneybox = Integer.parseInt("Your Moneybox: £" + Integer.parseInt(String.valueOf((moneybox))));
         setTitle(friendlyName);
         moneyboxTv.setText(String.valueOf(moneybox));
-
     }
 
     @Override
@@ -77,45 +72,5 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         moneyboxTv.setText(String.valueOf(moneybox));
 
         Toast.makeText(this, "£10 Deposited!", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        Log.d(TAG, "DETAIL ACTIVITY onStart");
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        Log.d(TAG, "DETAIL ACTIVITY onResume");
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        Log.d(TAG, "DETAIL ACTIVITY onPause");
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        Log.d(TAG, "DETAIL ACTIVITY onStop");
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Log.d(TAG, "DETAIL ACTIVITY onDestroy");
-
     }
 }

@@ -5,10 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * Created by dmytrovodnik on 1/23/18.
- */
-
-/**
  * SharedPreferences that saves the token
  */
 public class SavedPreferencesInteractor {

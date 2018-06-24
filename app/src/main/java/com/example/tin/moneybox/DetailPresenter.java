@@ -34,12 +34,10 @@ public class DetailPresenter implements DetailContract.DetailPresenter {
         ProductResponse.ProductModel product = mProducts.get(position);
 
         int moneybox = product.getMoneybox();
-        String productFriendlyName = product.getInvestorProductType();
+        String productFriendlyName = product.Product.FriendlyName;
         investorProductId = product.getInvestorProductId();
-        Log.e(TAG, "FRIENDLY NAME:" + product.Product.FriendlyName);
 
         detailScreen.populateDetailView(moneybox, productFriendlyName);
-
     }
 
     @Override
@@ -54,14 +52,12 @@ public class DetailPresenter implements DetailContract.DetailPresenter {
 
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
 
                     @Override
                     public void onNext(OneOffPaymentResponse oneOffPaymentResponse) {
 
                         detailScreen.updateMoneyBox(oneOffPaymentResponse.getMoneybox());
-
                     }
 
                     @Override
@@ -74,31 +70,7 @@ public class DetailPresenter implements DetailContract.DetailPresenter {
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
-
-
-
-
-
-
-
-
-
-
-
-//        String oneOffPaymentsUrl = UrlUtils.getOneOffPaymentsUrl();
-//
-//        /* Use the String URL "loginUrl" to request the JSON from the server and parse it */
-//        NetworkConnection.getInstance(context).getOneOffPaymentsResponseFromHttpUrl(oneOffPaymentsUrl, investorProductId, new NetworkListener.OneOffPaymentListener() {
-//
-//            @Override
-//            public void getResponse(int amountInMoneybox) {
-//
-//                detailScreen.updateMoneyBox(amountInMoneybox);
-//            }
-//        });
-
     }
 }

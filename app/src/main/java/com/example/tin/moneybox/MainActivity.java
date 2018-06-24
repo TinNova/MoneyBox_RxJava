@@ -3,6 +3,7 @@ package com.example.tin.moneybox;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     public static String PRODUCT_LIST = "product_list";
     public static String POSITION_CLICKED = "positionClicked";
 
-
     private MainPresenter mainPresenter;
 
     String firstName;
@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     String mUser;
     String mSession;
 
+    /* A check to see if the user entered activity via onCreate or onStart*/
+    boolean DETAIL_ACTIVITY;
+
 
     @SuppressLint("CheckResult")
     @Override
@@ -53,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         setContentView(R.layout.activity_main);
 
         Log.d(TAG, "MAIN ACTIVITY onCreate");
-
 
         mainPresenter = new MainPresenter(this);
 
@@ -67,17 +69,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         mAdapter = new ProductAdapter(null, getApplicationContext(), this);
         mRecyclerView.setAdapter(mAdapter);
 
+        DETAIL_ACTIVITY = false;
+
         Intent getIntent = getIntent();
 
         if (getIntent != null) {
             firstName = getIntent.getStringExtra(LoginActivity.USER_FIRST_NAME);
-            /**
-            * Token is not required here as it is saved in sharedPreferences, try follow to the code
-            * to understand where and when it is saved.
-            */
-            //token = getIntent.getStringExtra(LoginActivity.SESSION_TOKEN);
-            //Log.d(TAG, "mUsers: " + token);
-            Log.d(TAG, "mUsers: " + firstName);
 
             title = "Welcome back, " + " " + firstName;
 
@@ -98,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         });
 
         Log.d(TAG, "mUser: " + mUser);
-
     }
 
     @Override
@@ -128,9 +124,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
 
         Log.d(TAG, "Item Position: " + position);
 
-
-        Toast.makeText(this, "Clicked Position " + position, Toast.LENGTH_SHORT).show();
-
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(POSITION_CLICKED, position);
         intent.putParcelableArrayListExtra(PRODUCT_LIST, mProducts);
@@ -138,46 +131,50 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    public void onBackPressed() {
+        /* Make pop-up appear prompting user that they are about to logout */
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        final View dialogView = getLayoutInflater().inflate(R.layout.dialog_logout, null);
+        Button logoutButton = dialogView.findViewById(R.id.btn_dialogout_logout);
+        Button cancelButton = dialogView.findViewById(R.id.btn_dialogout_cancel);
 
-        Log.d(TAG, "MAIN ACTIVITY onStart");
+        mBuilder.setView(dialogView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainPresenter.startLogOut(MainActivity.this);
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-//        /* Called when user returns to MainActivity from DetailActivity, it ensures data is updated */
-//        mainPresenter.getThisWeekResponse(MainActivity.this);
+        if (DETAIL_ACTIVITY) {
+            /* Called when user returns to MainActivity from DetailActivity, it ensures data is updated */
+            mainPresenter.getThisWeekResponse(MainActivity.this);
+        }
 
         Log.d(TAG, "MAIN ACTIVITY onResume");
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        Log.d(TAG, "MAIN ACTIVITY onPause");
-
     }
 
     @Override
     protected void onStop() {
         super.onStop();
 
+        DETAIL_ACTIVITY = true;
         Log.d(TAG, "MAIN ACTIVITY onStop");
 
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Log.d(TAG, "MAIN ACTIVITY onDestroy");
-
-    }
-
 }

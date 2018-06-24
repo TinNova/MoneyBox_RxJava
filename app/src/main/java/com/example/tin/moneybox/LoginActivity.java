@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
 
         loginPresenter = new LoginPresenter(this);
 
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,20 +53,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
                 String pass = passEditText.getText().toString();
 
                 loginPresenter.startLogin(LoginActivity.this, email, pass);
-
             }
         });
-
-//        /* This is getting the Products list, should be moved to MainPresenter
-//            This is called on a successful or failed endpoint connection */
-//        RestService.getInstance(getApplication()).getProducts()
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(product -> { //Lambda code, it is the same as the above @overide onSubscribe ect...
-//
-//                    Log.d(TAG, "successul load of products " + product);
-//                }, throwable -> {
-//                    Log.e(TAG, "error while load products " + Log.getStackTraceString(throwable));
-//                });
     }
 
     @Override

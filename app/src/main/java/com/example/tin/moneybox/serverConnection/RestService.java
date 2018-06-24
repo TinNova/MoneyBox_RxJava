@@ -1,12 +1,9 @@
 package com.example.tin.moneybox.serverConnection;
 
-import android.app.Application;
 import android.content.Context;
-import android.util.Log;
 
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
 import com.example.tin.moneybox.serverConnection.body.PaymentBody;
-import com.example.tin.moneybox.serverConnection.response.LogoutResponse;
 import com.example.tin.moneybox.serverConnection.response.OneOffPaymentResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
@@ -14,7 +11,6 @@ import com.example.tin.moneybox.serverConnection.response.UserResponse;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Retrofit;
