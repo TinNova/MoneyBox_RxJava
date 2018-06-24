@@ -17,9 +17,28 @@ public class SavedPreferencesInteractor {
     private static final String TOKEN = "BearerToken";
     private SharedPreferences sharedPreferences;
 
+    private static SavedPreferencesInteractor INSTANCE;
+    private static Context CONTEXT;
+    private static final Object lock = new Object();
+
+    public static void context(Context context) {
+        CONTEXT = context;
+    }
+
     public SavedPreferencesInteractor(Context application) {
 
         sharedPreferences = application.getSharedPreferences("ME_PREFS", Context.MODE_PRIVATE);
+    }
+
+    public static SavedPreferencesInteractor getInstance() {
+        if (INSTANCE == null) {
+            synchronized (lock) {
+                if (INSTANCE == null) {
+                    INSTANCE = new SavedPreferencesInteractor(CONTEXT);
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public void saveToken(String token) {

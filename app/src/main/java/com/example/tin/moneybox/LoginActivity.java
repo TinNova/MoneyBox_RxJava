@@ -1,5 +1,6 @@
 package com.example.tin.moneybox;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -77,5 +78,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
         intent.putExtra(SESSION_TOKEN, sessionToken);
 
         startActivity(intent);
+    }
+
+    @Override
+    public Context provideContext() {
+        return this;
     }
 }

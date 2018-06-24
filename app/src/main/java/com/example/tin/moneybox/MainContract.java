@@ -1,5 +1,7 @@
 package com.example.tin.moneybox;
 
+import android.content.Context;
+
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ public interface MainContract {
         void showProducts(ArrayList<ProductResponse.ProductModel> products);
 
         void logout();
+
+        Context provideContext();
     }
 
     interface MainPresenter {

@@ -10,9 +10,6 @@ public class RetryWithDelay implements Function<Observable<? extends Throwable>,
     private final int retryDelayMillis;
     private int retryCount;
 
-
-    //TODO: When is this method called? What does it do?
-
     /**
      * Method which is called when a 401 or 404 or something else happened to allow for a break
      * before launching another request to login */

@@ -36,6 +36,7 @@ public class DetailPresenter implements DetailContract.DetailPresenter {
         int moneybox = product.getMoneybox();
         String productFriendlyName = product.getInvestorProductType();
         investorProductId = product.getInvestorProductId();
+        Log.e(TAG, "FRIENDLY NAME:" + product.Product.FriendlyName);
 
         detailScreen.populateDetailView(moneybox, productFriendlyName);
 

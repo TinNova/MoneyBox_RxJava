@@ -27,6 +27,7 @@ public class ProductResponse {
         public int Sytd; // How much the user has contributed in the current tax year
         public int MaximumDeposit;
         public String FriendlyName;
+        public SingleProduct Product;
 
 
         protected ProductModel(Parcel in) {
@@ -39,6 +40,7 @@ public class ProductResponse {
             Sytd = in.readInt();
             MaximumDeposit = in.readInt();
             FriendlyName = in.readString();
+            Product = in.readParcelable(SingleProduct.class.getClassLoader());
         }
 
         @Override
@@ -52,6 +54,7 @@ public class ProductResponse {
             dest.writeInt(Sytd);
             dest.writeInt(MaximumDeposit);
             dest.writeString(FriendlyName);
+            dest.writeParcelable(Product, 0);
         }
 
         @Override
@@ -143,4 +146,34 @@ public class ProductResponse {
         return Products;
     }
 
+
+    public static class SingleProduct implements Parcelable {
+        public String FriendlyName;
+
+        protected SingleProduct(Parcel in) {
+            FriendlyName = in.readString();
+        }
+
+        public static final Creator<SingleProduct> CREATOR = new Creator<SingleProduct>() {
+            @Override
+            public SingleProduct createFromParcel(Parcel in) {
+                return new SingleProduct(in);
+            }
+
+            @Override
+            public SingleProduct[] newArray(int size) {
+                return new SingleProduct[size];
+            }
+        };
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(FriendlyName);
+        }
+    }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.tin.moneybox.serverConnection.RestService;
+import com.example.tin.moneybox.serverConnection.SavedPreferencesInteractor;
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 import com.example.tin.moneybox.utils.Const;
@@ -22,20 +23,23 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
     LoginPresenter(LoginContract.LoginScreen screen) {
         this.loginScreen = screen;
+        SavedPreferencesInteractor.context(screen.provideContext());
+        this.savedPrefInteractor = SavedPreferencesInteractor.getInstance();
     }
 
-    private Context mcontext;
+    SavedPreferencesInteractor savedPrefInteractor;
 
+    //TODO: Here we need to save the Token in SharedPref
     @Override
     public void startLogin(Context context, String email, String pass) {
 
         Log.d(TAG, "email & password: " + email + ", " + pass);
 
-        //TODO: Show Loading Screen
+        //Show Loading Screen
 
         /* RxJava of Retrofit Method for login, this logs user in */
         RestService.getInstance(context)
-                .login(new LoginBody(Const.EMAIL, Const.PASS, Const.IDFA_VALUE))
+                .loginUser(new LoginBody(Const.EMAIL, Const.PASS, Const.IDFA_VALUE))
                 // Above we are:
                 // 1. Calling .login, an observable
                 // 2. Creating a new instance of the LoginBody and passing in the Username and Password the user inserted and the IDFA
@@ -67,6 +71,9 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
                         /* The user data is provided as a Json by Retrofit */
 
                         Log.d(TAG, "successful logged user " + userResponse);
+                        Log.d(TAG, "successful logged user " + userResponse.getSession().getBearerToken());
+
+                        savedPrefInteractor.saveToken(userResponse.getSession().getBearerToken());
 
                         String userFirstName = userResponse.getUserModel().getFirstName();
                         String sessionToken = userResponse.getSession().getBearerToken();

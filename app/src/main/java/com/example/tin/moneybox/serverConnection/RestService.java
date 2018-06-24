@@ -11,10 +11,12 @@ import com.example.tin.moneybox.serverConnection.response.OneOffPaymentResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -48,13 +50,14 @@ public class RestService {
         if (INSTANCE == null) {
 
             restService = new RestService();
-            savedPrefInteractor = new SavedPreferencesInteractor(application);
+            SavedPreferencesInteractor.context(application);
+            savedPrefInteractor = SavedPreferencesInteractor.getInstance();
 
             Retrofit retrofit = new Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .baseUrl("https://api-test00.moneyboxapp.com/")
-                    .client(provideOkHttp(savedPrefInteractor))
+                    .client(provideOkHttp(application, savedPrefInteractor))
                     .build();
 
             INSTANCE = retrofit.create(ApiMethods.class);
@@ -64,7 +67,7 @@ public class RestService {
         return restService;
     }
 
-    private static OkHttpClient provideOkHttp(final SavedPreferencesInteractor savedPrefInteractor) {
+    private static OkHttpClient provideOkHttp(Context context, final SavedPreferencesInteractor savedPrefInteractor) {
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
 
@@ -72,57 +75,57 @@ public class RestService {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
-                .addInterceptor(chain -> {
-
-                    /**
-                     * So this interceptor will add for EACH your call (even first login)
-                     * auth header
-                     * For the login we actually do not care if BearerToken will be or not
-                     */
-                    Log.d("BUMP", "we here " + savedPrefInteractor.getToken());
-                    Request newRequest;
-
-                    /* If we are logging in, we don't need the Token */
-                    if (chain.request().url().toString().contains("login")) {
-
-                        newRequest = chain.request().newBuilder()
-                                .addHeader("AppId", "3a97b932a9d449c981b595")
-                                .addHeader("appVersion", "4.11.0")
-                                .addHeader("apiVersion", "3.0.0")
-                                .addHeader("Content-Type", "application/json")
-                                .build();
-
-                        /* else, we are doing another endpoint, so we need the bearer*/
-                    } else {
-
-                        newRequest = chain.request().newBuilder()
-                                .addHeader("Authorization", "Bearer " + savedPrefInteractor.getToken())
-                                .addHeader("AppId", "3a97b932a9d449c981b595")
-                                .addHeader("appVersion", "4.11.0")
-                                .addHeader("apiVersion", "3.0.0")
-                                .addHeader("Content-Type", "application/json")
-                                .build();
-
-                    }
-
-                    /* For loop that brings the headers, for debugging perposes, it has to be a loop
-                     * because every header has the same name ".names()" */
-                    for (String name : newRequest.headers().names()) {
-
-                        Log.d(TAG, newRequest.url().toString() + " name " + name + " val " + newRequest.headers().get(name));
-
-                    }
-                    return chain.proceed(newRequest);
-                })
+//                .addInterceptor(chain -> {
+//
+//                    /**
+//                     * So this interceptor will add for EACH your call (even first login)
+//                     * auth header
+//                     * For the login we actually do not care if BearerToken will be or not
+//                     */
+//                    Log.d("BUMP", "we here " + savedPrefInteractor.getToken());
+//                    Request.Builder newRequestBuilder = chain.request().newBuilder()
+//                            .addHeader("AppId", "3a97b932a9d449c981b595")
+//                            .addHeader("appVersion", "4.11.0")
+//                            .addHeader("apiVersion", "3.0.0")
+//                            .addHeader("Content-Type", "application/json");
+//
+//
+//                    /* If we are logging in, we don't need the Token */
+//                    if (!chain.request().url().toString().contains("login")) {
+//
+//                        newRequestBuilder
+//                                .addHeader("Authorization", "Bearer " + savedPrefInteractor.getToken());
+//
+//                        /* else, we are doing another endpoint, so we need the bearer*/
+//                    }
+//
+//                    Request newRequest = newRequestBuilder.build();
+//
+//
+//                    /* For loop that brings the headers, for debugging perposes, it has to be a loop
+//                     * because every header has the same name ".names()" */
+//                    for (String name : newRequest.headers().names()) {
+//
+//                        Log.d(TAG, newRequest.url().toString() + " name " + name + " val " + newRequest.headers().get(name));
+//
+//                    }
+//                    return chain.proceed(newRequest);
+//                })
+                .addInterceptor(new TokenInterceptor(INSTANCE))
                 .build();
     }
 
     /* Returning the message from the server (whether succesful or otherwise)
     * This is sent to the code that started the connection within onError or onNext for example. */
-    public Observable<UserResponse> login(LoginBody loginBody) {
+    public Observable<UserResponse> loginUser(LoginBody loginBody) {
         // Here we receive the response, (which is the UserReponse which is already parsed when it arrives here,
         // We don't do anything with it here, we just return it.
         return INSTANCE.loginUser(loginBody);
+    }
+
+    /*It is now used for synchronous calls*/
+    public Call<UserResponse> loginUserSync(LoginBody loginBody) {
+        return INSTANCE.loginUserSync(loginBody);
     }
 
     public Observable<ProductResponse> getProducts() {
@@ -131,7 +134,7 @@ public class RestService {
         return INSTANCE.getProducts().retryWhen(new RetryWithSessionRefresh(sessionSerivce));
     }
 
-    public Observable<LogoutResponse> logOut() {
+    public Completable logOut() {
 
         return INSTANCE.logOut();
     }

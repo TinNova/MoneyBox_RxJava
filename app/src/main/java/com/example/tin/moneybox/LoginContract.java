@@ -10,6 +10,8 @@ public interface LoginContract {
     interface LoginScreen {
 
         void launchMainActivity(String firstName, String sessionToken);
+
+        Context provideContext();
     }
 
 

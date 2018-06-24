@@ -7,7 +7,9 @@ import com.example.tin.moneybox.serverConnection.response.OneOffPaymentResponse;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
+import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -18,11 +20,14 @@ public interface ApiMethods {
     @POST("/users/login")
     Observable<UserResponse> loginUser(@Body LoginBody loginBody);
 
+    @POST("/users/login")
+    Call<UserResponse> loginUserSync(@Body LoginBody loginBody);
+
     @GET("/investorproduct/thisweek")
     Observable<ProductResponse> getProducts();
 
     @POST("/users/logout")
-    Observable<LogoutResponse> logOut();
+    Completable logOut(); // Completable is used when there a response doesn't matter
 
     @POST("/oneoffpayments")
     Observable<OneOffPaymentResponse> payment(@Body PaymentBody paymentBody);

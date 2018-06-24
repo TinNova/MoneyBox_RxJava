@@ -1,6 +1,7 @@
 package com.example.tin.moneybox;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -112,8 +113,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     public void logout() {
 
         //TODO: Delete username, password and saved BearerToken within this method
+        //TODO: How can I access the SharedPref in order to clear it?
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public Context provideContext() {
+        return this;
     }
 
     @Override
@@ -142,8 +149,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     protected void onResume() {
         super.onResume();
 
-        /* Called when user returns to MainActivity from DetailActivity, it ensures data is updated */
-        mainPresenter.getThisWeekResponse(MainActivity.this);
+//        /* Called when user returns to MainActivity from DetailActivity, it ensures data is updated */
+//        mainPresenter.getThisWeekResponse(MainActivity.this);
 
         Log.d(TAG, "MAIN ACTIVITY onResume");
 

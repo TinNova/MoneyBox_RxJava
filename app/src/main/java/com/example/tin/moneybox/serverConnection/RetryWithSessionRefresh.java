@@ -11,7 +11,6 @@ public class RetryWithSessionRefresh implements Function<Observable<? extends Th
     private int maxRetries = 3;
     private int delay = 2000;
 
-    //TODO: When is this method called? What does it do?
     public RetryWithSessionRefresh(SessionService sessionSerivce) {
         this.sessionSerivce = sessionSerivce;
     }
