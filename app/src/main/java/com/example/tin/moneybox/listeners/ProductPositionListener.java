@@ -1,4 +1,4 @@
-package com.example.tin.moneybox;
+package com.example.tin.moneybox.listeners;
 
 import android.view.View;
 

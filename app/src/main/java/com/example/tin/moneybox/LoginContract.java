@@ -12,6 +12,9 @@ public interface LoginContract {
         void launchMainActivity(String firstName, String sessionToken);
 
         Context provideContext();
+
+        void showLoading();
+
     }
 
 

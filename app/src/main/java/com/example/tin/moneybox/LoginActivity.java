@@ -9,11 +9,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.tin.moneybox.serverConnection.RestService;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
+import com.example.tin.moneybox.utils.EmailValidationUtils;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+
+import static com.example.tin.moneybox.utils.EmailValidationUtils.isEmailValid;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.LoginScreen {
 
@@ -27,9 +33,14 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
 
     private LoginPresenter loginPresenter;
 
+    private TextView emailTextView;
+    private TextView passTextView;
+
     private Button loginButton;
     private EditText emailEditText;
     private EditText passEditText;
+
+    private ProgressBar loadingIndicator;
 
 
     @Override
@@ -38,9 +49,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
         setContentView(R.layout.activity_login);
 
         /* Initialising all of the buttons */
-        loginButton = findViewById(R.id.btn_Login);
-        emailEditText = findViewById(R.id.emailEditText);
-        passEditText = findViewById(R.id.passEditText);
+        loadingIndicator = findViewById(R.id.pB_lgn_loading);
+        loginButton = findViewById(R.id.btn_lgn_login);
+        emailEditText = findViewById(R.id.eT_lgn_email);
+        passEditText = findViewById(R.id.eT_lgn_pass);
+        emailTextView = findViewById(R.id.tV_lgn_email);
+        passTextView = findViewById(R.id.tV_lgn_pass);
 
         loginPresenter = new LoginPresenter(this);
 
@@ -52,7 +66,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
                 String email = emailEditText.getText().toString();
                 String pass = passEditText.getText().toString();
 
-                loginPresenter.startLogin(LoginActivity.this, email, pass);
+                if (!pass.isEmpty() && isEmailValid(email)) {
+
+                    loginPresenter.startLogin(LoginActivity.this, email, pass);
+                } else {
+                    Toast.makeText(LoginActivity.this, LoginActivity.this.getString(R.string.incorrect_login_details), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -70,5 +89,16 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
     @Override
     public Context provideContext() {
         return this;
+    }
+
+    @Override
+    public void showLoading() {
+
+        loadingIndicator.setVisibility(View.VISIBLE);
+        emailTextView.setVisibility(View.INVISIBLE);
+        emailEditText.setVisibility(View.INVISIBLE);
+        passTextView.setVisibility(View.INVISIBLE);
+        passEditText.setVisibility(View.INVISIBLE);
+        loginButton.setVisibility(View.INVISIBLE);
     }
 }

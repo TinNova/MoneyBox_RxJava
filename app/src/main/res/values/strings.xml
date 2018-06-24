@@ -7,6 +7,11 @@
     <string name="deposit_moneybox">Add £10 to my Moneybox</string>
     <string name="detailActivity_title">Your Moneybox: £</string>
 
+    <!-- MainActivity -->
+    <string name="welcome_back">Welcome back,&#160;</string>
+
+
+
     <!-- dialog_logout-->
     <string name="dialog_logout_description">Are you sure you want to exit the app? \n
         You will be logged out automatically.</string>
@@ -16,5 +21,9 @@
 
     <!-- Session Time Out Message -->
     <string name="session_timed_out">Session Timed Out, Login To Continue</string>
+
+    <string name="error_loading">Error Loading, Please Try Again</string>
+
+    <string name="incorrect_login_details">Invalid Email or Password, Please Retry</string>
 
 </resources>

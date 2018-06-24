@@ -30,6 +30,8 @@ public class MainPresenter implements MainContract.MainPresenter {
     @Override
     public void getThisWeekResponse(MainActivity context) {
 
+        mainScreen.showLoading();
+
         /* This is getting the Products list, should be moved to MainPresenter
            This is called on a successful or failed endpoint connection */
         RestService.getInstance(context)
@@ -75,12 +77,8 @@ public class MainPresenter implements MainContract.MainPresenter {
                 });
     }
 
-
-    //TODO: During the Logout, HTTP return 200, but the code always goes to onError, why is this? How to fix it?
     @Override
     public void startLogOut(MainActivity context) {
-
-        Toast.makeText(context, "logout...", Toast.LENGTH_SHORT).show();
 
         RestService.getInstance(context)
                 .logOut()
@@ -94,8 +92,6 @@ public class MainPresenter implements MainContract.MainPresenter {
 
                     @Override
                     public void onComplete() {
-                        //TODO: When a user logs out, I want to clear the Token, but I'm unable to interact with the SharePref,
-                        //TODO...If you uncomment the code you'll see it crashes
                         Log.d(TAG, "onComplete Logout ");
                         mainScreen.logout();
                         savedPrefInteractor.saveToken("");
@@ -104,7 +100,6 @@ public class MainPresenter implements MainContract.MainPresenter {
 
                     @Override
                     public void onError(Throwable e) {
-                        //TODO: HTTP Returns 200 but it always lands here in onError
                         Log.e(TAG, "onError Logout !!! " + Log.getStackTraceString(e));
                         savedPrefInteractor.saveToken("");
                         Log.d(TAG, "TOKEN ON LOGOUT onError:" + savedPrefInteractor.getToken());
@@ -112,5 +107,10 @@ public class MainPresenter implements MainContract.MainPresenter {
                         mainScreen.logout();
                     }
                 });
+    }
+
+    @Override
+    public void hideLoading() {
+        mainScreen.hideLoading();
     }
 }

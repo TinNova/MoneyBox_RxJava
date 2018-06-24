@@ -19,6 +19,11 @@ public interface MainContract {
         void logout();
 
         Context provideContext();
+
+        void showLoading();
+
+        void hideLoading();
+
     }
 
     interface MainPresenter {
@@ -26,5 +31,8 @@ public interface MainContract {
         void getThisWeekResponse(MainActivity mainActivity);
 
         void startLogOut(MainActivity mainActivity);
+
+        void hideLoading();
+
     }
 }

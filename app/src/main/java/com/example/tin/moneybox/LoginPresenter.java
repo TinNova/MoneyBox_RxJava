@@ -3,6 +3,7 @@ package com.example.tin.moneybox;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.tin.moneybox.serverConnection.RestService;
 import com.example.tin.moneybox.serverConnection.SavedPreferencesInteractor;
@@ -35,7 +36,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
         Log.d(TAG, "email & password: " + email + ", " + pass);
 
-        //Show Loading Screen
+        loginScreen.showLoading();
 
         /* RxJava of Retrofit Method for login, this logs user in */
         RestService.getInstance(context)
@@ -84,8 +85,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
                     @Override
                     public void onError(Throwable e) {
 
-                        // Called when we have an error in the response
-                        // Here you can place a Toast message "Incorrect password" or "No internet data"
+                        Toast.makeText(context, context.getString(R.string.incorrect_login_details), Toast.LENGTH_SHORT).show();
                         Log.e(TAG, "error = " + Log.getStackTraceString(e));
                     }
 

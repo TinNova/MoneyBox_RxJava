@@ -17,11 +17,16 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     private static final String TAG = DetailActivity.class.getSimpleName();
 
+    private String SAVED_MONEYBOX = "saved_moneybox";
+    private String SAVED_PRODUCTS_ARRAY = "save_products_array";
+    private String SAVED_POSITION_CLICKED = "saved_position_clicked";
+
     private DetailPresenter detailPresenter;
 
     private ArrayList<ProductResponse.ProductModel> mProducts;
 
     int positionClicked;
+    private int mMoneybox;
 
     TextView moneyboxTv;
     Button depositBtn;
@@ -38,39 +43,63 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
         moneyboxTv = findViewById(R.id.tV_moneybox);
         depositBtn = findViewById(R.id.btn_depositMoney);
 
-        Intent getIntent = getIntent();
-
-        if (getIntent != null) {
-            mProducts = getIntent.getParcelableArrayListExtra(MainActivity.PRODUCT_LIST);
-            positionClicked = getIntent.getIntExtra(MainActivity.POSITION_CLICKED, -1);
-
+        /* If There isn't a savedInstanceState, Download The Data And Build The RecyclerView */
+        if (savedInstanceState != null) {
+            mMoneybox = savedInstanceState.getInt(SAVED_MONEYBOX);
+            mProducts = savedInstanceState.getParcelableArrayList(SAVED_PRODUCTS_ARRAY);
+            positionClicked = savedInstanceState.getInt(SAVED_POSITION_CLICKED);
             detailPresenter.prepareArrayListData(mProducts, positionClicked);
 
-            depositBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    detailPresenter.depositMoney(DetailActivity.this);
-                }
-            });
         } else {
-            Toast.makeText(this, "Error loading data, please try again.", Toast.LENGTH_SHORT).show();
+            Intent getIntent = getIntent();
+
+            if (getIntent != null) {
+                mProducts = getIntent.getParcelableArrayListExtra(MainActivity.PRODUCT_LIST);
+                positionClicked = getIntent.getIntExtra(MainActivity.POSITION_CLICKED, -1);
+
+                detailPresenter.prepareArrayListData(mProducts, positionClicked);
+
+            } else {
+                Toast.makeText(this, "Error loading data, please try again.", Toast.LENGTH_SHORT).show();
+            }
         }
+
+        depositBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                detailPresenter.depositMoney(DetailActivity.this);
+            }
+        });
     }
 
     @Override
     public void populateDetailView(int moneybox, String friendlyName) {
 
-        //moneybox = Integer.parseInt("Your Moneybox: £" + Integer.parseInt(String.valueOf((moneybox))));
         setTitle(friendlyName);
-        moneyboxTv.setText(String.valueOf(moneybox));
+        if (mMoneybox > moneybox ) {
+            moneyboxTv.setText(String.valueOf(mMoneybox));
+        } else {
+            moneyboxTv.setText(String.valueOf(moneybox));
+        }
     }
 
     @Override
     public void updateMoneyBox(int moneybox) {
 
-        moneyboxTv.setText(String.valueOf(moneybox));
+        mMoneybox = moneybox;
+        moneyboxTv.setText(String.valueOf(mMoneybox));
 
         Toast.makeText(this, "£10 Deposited!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        /* Saving mWeather to be reused should the device rotate */
+        outState.putInt(SAVED_MONEYBOX, mMoneybox);
+        outState.putParcelableArrayList(SAVED_PRODUCTS_ARRAY, mProducts);
+        outState.putInt(SAVED_POSITION_CLICKED, positionClicked);
     }
 }

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.tin.moneybox.BuildConfig;
 import com.example.tin.moneybox.serverConnection.body.LoginBody;
 import com.example.tin.moneybox.serverConnection.response.UserResponse;
 import com.example.tin.moneybox.utils.Const;
@@ -22,6 +23,8 @@ import okhttp3.Response;
 public class TokenInterceptor implements Interceptor {
 
     private static final int UNAUTHORISED_ERROR = 401;
+
+    private static final String APP_ID = BuildConfig.MB_API_KEY;
 
     private final Lock lock = new ReentrantLock();
     private final ApiMethods INSTANC;
@@ -69,7 +72,7 @@ public class TokenInterceptor implements Interceptor {
 
         Log.d("BUMP", "TOKEN RETRIEVED " + token);
         requestBuilder
-                .addHeader("AppId", "3a97b932a9d449c981b595")
+                .addHeader("AppId", APP_ID)
                 .addHeader("appVersion", "4.11.0")
                 .addHeader("apiVersion", "3.0.0")
                 .addHeader("Content-Type", "application/json");

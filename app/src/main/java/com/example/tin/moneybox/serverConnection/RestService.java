@@ -71,42 +71,6 @@ public class RestService {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
-//                .addInterceptor(chain -> {
-//
-//                    /**
-//                     * So this interceptor will add for EACH your call (even first login)
-//                     * auth header
-//                     * For the login we actually do not care if BearerToken will be or not
-//                     */
-//                    Log.d("BUMP", "we here " + savedPrefInteractor.getToken());
-//                    Request.Builder newRequestBuilder = chain.request().newBuilder()
-//                            .addHeader("AppId", "3a97b932a9d449c981b595")
-//                            .addHeader("appVersion", "4.11.0")
-//                            .addHeader("apiVersion", "3.0.0")
-//                            .addHeader("Content-Type", "application/json");
-//
-//
-//                    /* If we are logging in, we don't need the Token */
-//                    if (!chain.request().url().toString().contains("login")) {
-//
-//                        newRequestBuilder
-//                                .addHeader("Authorization", "Bearer " + savedPrefInteractor.getToken());
-//
-//                        /* else, we are doing another endpoint, so we need the bearer*/
-//                    }
-//
-//                    Request newRequest = newRequestBuilder.build();
-//
-//
-//                    /* For loop that brings the headers, for debugging perposes, it has to be a loop
-//                     * because every header has the same name ".names()" */
-//                    for (String name : newRequest.headers().names()) {
-//
-//                        Log.d(TAG, newRequest.url().toString() + " name " + name + " val " + newRequest.headers().get(name));
-//
-//                    }
-//                    return chain.proceed(newRequest);
-//                })
                 .addInterceptor(new TokenInterceptor(INSTANCE))
                 .build();
     }

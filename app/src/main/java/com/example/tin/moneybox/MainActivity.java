@@ -11,9 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tin.moneybox.adapters.ProductAdapter;
+import com.example.tin.moneybox.listeners.ProductPositionListener;
 import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 
 import java.util.ArrayList;
@@ -29,11 +32,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     private MainPresenter mainPresenter;
 
     String firstName;
-    String lastName;
     String title;
-    String token;
 
     private Button logOutButton;
+    private TextView titleTextView;
+    private ProgressBar loadingIndicator;
 
     /*
      * Needed to populate the Adapter and the RecyclerView
@@ -59,10 +62,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
 
         mainPresenter = new MainPresenter(this);
 
-        logOutButton = findViewById(R.id.btn_Logout);
+        logOutButton = findViewById(R.id.btn_main_Logout);
+        titleTextView = findViewById(R.id.tV_main_title);
+        loadingIndicator = findViewById(R.id.pB_main_loading);
 
         /* Setting up the RecyclerView and Adapter*/
-        mRecyclerView = findViewById(R.id.rV_productList);
+        mRecyclerView = findViewById(R.id.rV_main_productList);
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
@@ -76,14 +81,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
         if (getIntent != null) {
             firstName = getIntent.getStringExtra(LoginActivity.USER_FIRST_NAME);
 
-            title = "Welcome back, " + " " + firstName;
+            title = this.getString(R.string.welcome_back) + firstName;
 
             setTitle(title);
 
             mainPresenter.getThisWeekResponse(MainActivity.this);
 
         } else {
-            Toast.makeText(this, "Error loading data, please try again.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, this.getString(R.string.error_loading), Toast.LENGTH_SHORT).show();
         }
 
         logOutButton.setOnClickListener(new View.OnClickListener() {
@@ -102,14 +107,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
 
         mProducts = products;
         mAdapter.setProducts(products);
-        //hideLoading();
+        mainPresenter.hideLoading();
     }
 
     @Override
     public void logout() {
 
-        //TODO: Delete username, password and saved BearerToken within this method
-        //TODO: How can I access the SharedPref in order to clear it?
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
@@ -158,6 +161,24 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     }
 
     @Override
+    public void showLoading() {
+
+        loadingIndicator.setVisibility(View.VISIBLE);
+        logOutButton.setVisibility(View.INVISIBLE);
+        titleTextView.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+
+        loadingIndicator.setVisibility(View.INVISIBLE);
+        logOutButton.setVisibility(View.VISIBLE);
+        titleTextView.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -165,16 +186,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
             /* Called when user returns to MainActivity from DetailActivity, it ensures data is updated */
             mainPresenter.getThisWeekResponse(MainActivity.this);
         }
-
-        Log.d(TAG, "MAIN ACTIVITY onResume");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-
         DETAIL_ACTIVITY = true;
-        Log.d(TAG, "MAIN ACTIVITY onStop");
-
     }
 }
