@@ -30,7 +30,6 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
     private final SavedPreferencesInteractor savedPrefInteractor;
 
-    //TODO: Here we need to save the Token in SharedPref
     @Override
     public void startLogin(Context context, String email, String pass) {
 
