@@ -5,7 +5,7 @@ import com.example.tin.moneybox.serverConnection.response.ProductResponse;
 import java.util.ArrayList;
 
 
-public interface DetailContract {
+interface DetailContract {
 
     interface DetailScreen {
 

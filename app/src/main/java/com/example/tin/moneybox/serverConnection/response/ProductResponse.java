@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ProductResponse {
 
-    ArrayList<ProductModel> Products;
+    private ArrayList<ProductModel> Products;
 
     @Override
     public String toString() {
@@ -18,19 +18,19 @@ public class ProductResponse {
 
     public static class ProductModel implements Parcelable {
 
-        public int InvestorProductId;
-        public String InvestorProductType;
-        public int ProductId;
-        public int Moneybox; // How much the user has saved this week so far and is the users 'Moneybox'
-        public int SubscriptionAmount; // What the current weekly subscription is set to
-        public int PlanValue; // The current account balance
-        public int Sytd; // How much the user has contributed in the current tax year
-        public int MaximumDeposit;
-        public String FriendlyName;
-        public SingleProduct Product;
+        public final int InvestorProductId;
+        public final String InvestorProductType;
+        public final int ProductId;
+        public final int Moneybox; // How much the user has saved this week so far and is the users 'Moneybox'
+        public final int SubscriptionAmount; // What the current weekly subscription is set to
+        public final int PlanValue; // The current account balance
+        public final int Sytd; // How much the user has contributed in the current tax year
+        public final int MaximumDeposit;
+        public final String FriendlyName;
+        public final SingleProduct Product;
 
 
-        protected ProductModel(Parcel in) {
+        ProductModel(Parcel in) {
             InvestorProductId = in.readInt();
             InvestorProductType = in.readString();
             ProductId = in.readInt();
@@ -133,9 +133,9 @@ public class ProductResponse {
 
 
     public static class SingleProduct implements Parcelable {
-        public String FriendlyName;
+        public final String FriendlyName;
 
-        protected SingleProduct(Parcel in) {
+        SingleProduct(Parcel in) {
             FriendlyName = in.readString();
         }
 

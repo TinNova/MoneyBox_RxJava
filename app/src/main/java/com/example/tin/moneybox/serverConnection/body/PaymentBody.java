@@ -1,13 +1,10 @@
 package com.example.tin.moneybox.serverConnection.body;
 
-/**
- * Created by Tin on 23/06/2018.
- */
 
 public class PaymentBody {
 
-    int Amount;
-    int InvestorProductId;
+    private final int Amount;
+    private final int InvestorProductId;
 
     public PaymentBody(int amount, int investorProductId) {
         Amount = amount;

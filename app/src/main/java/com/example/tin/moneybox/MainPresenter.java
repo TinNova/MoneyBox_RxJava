@@ -1,7 +1,6 @@
 package com.example.tin.moneybox;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.tin.moneybox.serverConnection.RestService;
 import com.example.tin.moneybox.serverConnection.SavedPreferencesInteractor;
@@ -18,9 +17,9 @@ public class MainPresenter implements MainContract.MainPresenter {
 
     private static final String TAG = MainPresenter.class.getSimpleName();
 
-    SavedPreferencesInteractor savedPrefInteractor;
+    private final SavedPreferencesInteractor savedPrefInteractor;
 
-    private MainContract.MainScreen mainScreen;
+    private final MainContract.MainScreen mainScreen;
 
     MainPresenter(MainContract.MainScreen screen) {
         this.mainScreen = screen;

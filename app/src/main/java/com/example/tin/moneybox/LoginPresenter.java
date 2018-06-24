@@ -20,7 +20,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
 
     private static final String TAG = LoginPresenter.class.getSimpleName();
 
-    private LoginContract.LoginScreen loginScreen;
+    private final LoginContract.LoginScreen loginScreen;
 
     LoginPresenter(LoginContract.LoginScreen screen) {
         this.loginScreen = screen;
@@ -28,7 +28,7 @@ public class LoginPresenter implements LoginContract.LoginPresenter {
         this.savedPrefInteractor = SavedPreferencesInteractor.getInstance();
     }
 
-    SavedPreferencesInteractor savedPrefInteractor;
+    private final SavedPreferencesInteractor savedPrefInteractor;
 
     //TODO: Here we need to save the Token in SharedPref
     @Override

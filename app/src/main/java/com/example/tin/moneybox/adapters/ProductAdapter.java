@@ -18,15 +18,14 @@ import java.util.ArrayList;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
 
     private ArrayList<ProductResponse.ProductModel> mProducts;
-    private final Context context;
 
-    private ProductPositionListener productPositionListener;
+    private final ProductPositionListener productPositionListener;
 
     /* Constructor:
      * Pass in the StationPositionListener Interface into the Adapter on construction */
     public ProductAdapter(ArrayList<ProductResponse.ProductModel> products, Context context, ProductPositionListener listener) {
         this.mProducts = products;
-        this.context = context;
+        Context context1 = context;
         this.productPositionListener = listener;
 
     }

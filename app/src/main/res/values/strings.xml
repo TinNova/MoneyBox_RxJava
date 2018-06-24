@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">MoneyBox</string>
 
-    <!-- LoginActivity -->
+    <!-- activity_login -->
+    <string name="email_address">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 
     <!-- DetailActivity -->
     <string name="deposit_moneybox">Add £10 to my Moneybox</string>
@@ -10,7 +13,9 @@
     <!-- MainActivity -->
     <string name="welcome_back">Welcome back,&#160;</string>
 
-
+    <!-- activity_main -->
+    <string name="mainActivity_title">Your Accounts</string>
+    <string name="mainActivity_logout">Log Out</string>
 
     <!-- dialog_logout-->
     <string name="dialog_logout_description">Are you sure you want to exit the app? \n
@@ -19,11 +24,8 @@
     <string name="dialog_logout_logout_btn">Logout</string>
     <string name="dialog_logout_cancel_btn">Cancel</string>
 
-    <!-- Session Time Out Message -->
-    <string name="session_timed_out">Session Timed Out, Login To Continue</string>
-
+    <!-- Error Messages -->
     <string name="error_loading">Error Loading, Please Try Again</string>
-
     <string name="incorrect_login_details">Invalid Email or Password, Please Retry</string>
 
 </resources>

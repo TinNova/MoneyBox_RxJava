@@ -26,13 +26,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     private static final String TAG = MainActivity.class.getSimpleName();
 
     /* Key for Intent */
-    public static String PRODUCT_LIST = "product_list";
-    public static String POSITION_CLICKED = "positionClicked";
+    public static final String PRODUCT_LIST = "product_list";
+    public static final String POSITION_CLICKED = "positionClicked";
 
     private MainPresenter mainPresenter;
 
-    String firstName;
-    String title;
+    private String firstName;
+    private String title;
 
     private Button logOutButton;
     private TextView titleTextView;
@@ -45,11 +45,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
     private ProductAdapter mAdapter;
     /* Used for savedInstanceState */
     private ArrayList<ProductResponse.ProductModel> mProducts;
-    String mUser;
-    String mSession;
 
     /* A check to see if the user entered activity via onCreate or onStart*/
-    boolean DETAIL_ACTIVITY;
+    private boolean DETAIL_ACTIVITY;
 
 
     @SuppressLint("CheckResult")
@@ -98,8 +96,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.Main
                 mainPresenter.startLogOut(MainActivity.this);
             }
         });
-
-        Log.d(TAG, "mUser: " + mUser);
     }
 
     @Override

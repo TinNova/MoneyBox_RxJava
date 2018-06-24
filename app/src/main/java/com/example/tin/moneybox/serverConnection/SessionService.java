@@ -8,10 +8,10 @@ import com.example.tin.moneybox.utils.Const;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
-public class SessionService {
+class SessionService {
 
-    ApiMethods apiMethods;
-    SavedPreferencesInteractor savedPrefInteractor;
+    private final ApiMethods apiMethods;
+    private final SavedPreferencesInteractor savedPrefInteractor;
 
     public SessionService(ApiMethods apiMethods, SavedPreferencesInteractor savedPrefInteractor) {
 

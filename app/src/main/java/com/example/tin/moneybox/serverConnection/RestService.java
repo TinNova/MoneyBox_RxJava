@@ -37,7 +37,6 @@ public class RestService {
     private static ApiMethods INSTANCE;
     private static SessionService sessionSerivce;
     private static RestService restService;
-    private static SavedPreferencesInteractor savedPrefInteractor;
 
     public static RestService getInstance(Context application) {
 
@@ -47,7 +46,7 @@ public class RestService {
 
             restService = new RestService();
             SavedPreferencesInteractor.context(application);
-            savedPrefInteractor = SavedPreferencesInteractor.getInstance();
+            SavedPreferencesInteractor savedPrefInteractor = SavedPreferencesInteractor.getInstance();
 
             Retrofit retrofit = new Retrofit.Builder()
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

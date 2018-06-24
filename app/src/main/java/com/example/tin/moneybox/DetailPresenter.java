@@ -20,13 +20,13 @@ public class DetailPresenter implements DetailContract.DetailPresenter {
 
     private static final String TAG = DetailPresenter.class.getSimpleName();
 
-    private DetailContract.DetailScreen detailScreen;
+    private final DetailContract.DetailScreen detailScreen;
 
     DetailPresenter(DetailContract.DetailScreen screen) {
         this.detailScreen = screen;
     }
 
-    int investorProductId;
+    private int investorProductId;
 
     @Override
     public void prepareArrayListData(ArrayList<ProductResponse.ProductModel> mProducts, int position) {

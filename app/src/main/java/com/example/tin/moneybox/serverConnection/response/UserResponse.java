@@ -7,7 +7,7 @@ public class UserResponse implements Parcelable {
 
     /* The JsonObjects we want to get data from */
     public Session Session;
-    public UserModel User;
+    private UserModel User;
 
 
     /* Within the Session JsonObject, the values we want to take*/
@@ -63,7 +63,7 @@ public class UserResponse implements Parcelable {
 
 
 
-    protected UserResponse(Parcel in) {
+    private UserResponse(Parcel in) {
     }
 
     public static final Creator<UserResponse> CREATOR = new Creator<UserResponse>() {

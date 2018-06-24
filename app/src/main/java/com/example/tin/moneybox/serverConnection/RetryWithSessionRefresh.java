@@ -3,13 +3,13 @@ package com.example.tin.moneybox.serverConnection;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
-public class RetryWithSessionRefresh implements Function<Observable<? extends Throwable>, Observable<?>> {
+class RetryWithSessionRefresh implements Function<Observable<? extends Throwable>, Observable<?>> {
 
     private String TAG = "RetrySession";
 
     private final SessionService sessionSerivce;
-    private int maxRetries = 3;
-    private int delay = 2000;
+    private final int maxRetries = 3;
+    private final int delay = 2000;
 
     public RetryWithSessionRefresh(SessionService sessionSerivce) {
         this.sessionSerivce = sessionSerivce;

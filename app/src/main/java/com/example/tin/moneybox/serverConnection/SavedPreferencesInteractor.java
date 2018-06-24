@@ -1,6 +1,5 @@
 package com.example.tin.moneybox.serverConnection;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -11,7 +10,7 @@ public class SavedPreferencesInteractor {
 
 
     private static final String TOKEN = "BearerToken";
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     private static SavedPreferencesInteractor INSTANCE;
     private static Context CONTEXT;

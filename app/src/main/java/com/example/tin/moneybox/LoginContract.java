@@ -2,10 +2,8 @@ package com.example.tin.moneybox;
 
 import android.content.Context;
 
-import com.example.tin.moneybox.serverConnection.response.UserResponse;
 
-
-public interface LoginContract {
+interface LoginContract {
 
     interface LoginScreen {
 

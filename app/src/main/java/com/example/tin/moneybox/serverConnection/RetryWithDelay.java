@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
-public class RetryWithDelay implements Function<Observable<? extends Throwable>, Observable<?>> {
+class RetryWithDelay implements Function<Observable<? extends Throwable>, Observable<?>> {
     private final int maxRetries;
     private final int retryDelayMillis;
     private int retryCount;

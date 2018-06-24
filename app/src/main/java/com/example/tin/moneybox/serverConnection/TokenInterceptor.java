@@ -1,6 +1,5 @@
 package com.example.tin.moneybox.serverConnection;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,11 +19,22 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class TokenInterceptor implements Interceptor {
+class TokenInterceptor implements Interceptor {
 
     private static final int UNAUTHORISED_ERROR = 401;
 
-    private static final String APP_ID = BuildConfig.MB_API_KEY;
+    /* Header Keys */
+    private static final String APP_ID_KEY = "AppId";
+    private static final String CONTENT_TYPE_KEY = "Content-Type";
+    private static final String APP_VERSION_KEY = "appVersion";
+    private static final String API_VERSION_KEY = "apiVersion";
+    private static final String AUTHORIZATION_KEY = "Authorization";
+    /* Header Values */
+    private static final String APP_ID_VALUE = BuildConfig.MB_API_KEY;
+    private static final String CONTENT_TYPE_VALUE = "application/json";
+    private static final String APP_VERSION_VALUE = "4.11.0";
+    private static final String API_VERSION_VALUE = "3.0.0";
+    private static final String BEARER = "Bearer ";
 
     private final Lock lock = new ReentrantLock();
     private final ApiMethods INSTANC;
@@ -44,7 +54,7 @@ public class TokenInterceptor implements Interceptor {
         return chain.proceed(addToken(chain));
     }
 
-    private Response refreshToken(@NonNull Chain chain) throws IOException {
+    private void refreshToken(@NonNull Chain chain) throws IOException {
         if (lock.tryLock()) {
             try {
                 final UserResponse userResponse = INSTANC.loginUserSync(new LoginBody(Const.EMAIL, Const.PASS, Const.IDFA_VALUE)).execute()
@@ -56,7 +66,7 @@ public class TokenInterceptor implements Interceptor {
         } else {
             lock.lock();
         }
-        return chain.proceed(addToken(chain));
+        chain.proceed(addToken(chain));
     }
 
     private Request addToken(Chain chain) {
@@ -72,17 +82,17 @@ public class TokenInterceptor implements Interceptor {
 
         Log.d("BUMP", "TOKEN RETRIEVED " + token);
         requestBuilder
-                .addHeader("AppId", APP_ID)
-                .addHeader("appVersion", "4.11.0")
-                .addHeader("apiVersion", "3.0.0")
-                .addHeader("Content-Type", "application/json");
+                .addHeader(APP_ID_KEY, APP_ID_VALUE)
+                .addHeader(APP_VERSION_KEY, APP_VERSION_VALUE)
+                .addHeader(API_VERSION_KEY, API_VERSION_VALUE)
+                .addHeader(CONTENT_TYPE_KEY, CONTENT_TYPE_VALUE);
 
 
                     /* If we are logging in, we don't need the Token */
         if (!chain.request().url().toString().contains("login")) {
 
             requestBuilder
-                    .addHeader("Authorization", "Bearer " + token);
+                    .addHeader(AUTHORIZATION_KEY, BEARER + token);
 
                         /* else, we are doing another endpoint, so we need the bearer*/
         }

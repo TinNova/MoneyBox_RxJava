@@ -17,19 +17,19 @@ public class DetailActivity extends AppCompatActivity implements DetailContract.
 
     private static final String TAG = DetailActivity.class.getSimpleName();
 
-    private String SAVED_MONEYBOX = "saved_moneybox";
-    private String SAVED_PRODUCTS_ARRAY = "save_products_array";
-    private String SAVED_POSITION_CLICKED = "saved_position_clicked";
+    private final String SAVED_MONEYBOX = "saved_moneybox";
+    private final String SAVED_PRODUCTS_ARRAY = "save_products_array";
+    private final String SAVED_POSITION_CLICKED = "saved_position_clicked";
 
     private DetailPresenter detailPresenter;
 
     private ArrayList<ProductResponse.ProductModel> mProducts;
 
-    int positionClicked;
+    private int positionClicked;
     private int mMoneybox;
 
-    TextView moneyboxTv;
-    Button depositBtn;
+    private TextView moneyboxTv;
+    private Button depositBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

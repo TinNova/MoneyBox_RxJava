@@ -2,10 +2,8 @@ package com.example.tin.moneybox;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,11 +11,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tin.moneybox.serverConnection.RestService;
-import com.example.tin.moneybox.serverConnection.response.UserResponse;
-import com.example.tin.moneybox.utils.EmailValidationUtils;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static com.example.tin.moneybox.utils.EmailValidationUtils.isEmailValid;
 
@@ -26,10 +19,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Lo
     private static final String TAG = LoginActivity.class.getSimpleName();
 
     /* Key for Intent */
-    public static String USER_FIRST_NAME = "user_first_name";
-    public static String USER_DATA_USER = "user_data_user";
-    public static String USER_DATA_SESSION = "user_data_session";
-    public static String SESSION_TOKEN = "session_token";
+    public static final String USER_FIRST_NAME = "user_first_name";
+    private static final String SESSION_TOKEN = "session_token";
 
     private LoginPresenter loginPresenter;
 

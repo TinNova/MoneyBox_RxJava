@@ -13,7 +13,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
-public interface ApiMethods {
+interface ApiMethods {
 
     /* This the the url, at loginUser we are attaching the LonginBody (email/pass/ISBD) Retrofit turns this into a Json */
     @POST("/users/login")
