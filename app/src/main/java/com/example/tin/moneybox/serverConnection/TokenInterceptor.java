@@ -45,9 +45,13 @@ class TokenInterceptor implements Interceptor {
         mSavedPreferencesInteractor = SavedPreferencesInteractor.getInstance();
     }
 
+    /** Here we are stating, what we are listening/filtering for. We are listening/filtering for
+     * a 401 error */
     @Override
     public Response intercept(Chain chain) throws IOException {
         Response response = chain.proceed(chain.request());
+        /** If the response contains 401, then we need to launch the .loginUserSync API, pass in the users
+         * Email and Password in order to retrieve a valid token*/
         if (response.code() == UNAUTHORISED_ERROR) {
             refreshToken(chain);
         }
@@ -55,12 +59,20 @@ class TokenInterceptor implements Interceptor {
     }
 
     private void refreshToken(@NonNull Chain chain) throws IOException {
+        // lock ensures only this thread and no other has access to the UserResponse Model
         if (lock.tryLock()) {
             try {
-                final UserResponse userResponse = INSTANC.loginUserSync(new LoginBody(Const.EMAIL, Const.PASS, Const.IDFA_VALUE)).execute()
+                /**
+                 * Here we are doing a synchronous API call with .loginUserSync to retrieve the token
+                 * Notice the ".execute()", this means it's an API call
+                 */
+                final UserResponse userResponse = INSTANC.loginUserSync(new LoginBody(Const.EMAIL, Const.PASS, Const.IDFA_VALUE))
+                        .execute()
                         .body();
+                /** Here we are saving the token retrieved */
                 mSavedPreferencesInteractor.saveToken(userResponse.getSession().getBearerToken());
             } finally {
+                /** We are unlocking access to the UserResponse Model*/
                 lock.unlock();
             }
         } else {
@@ -81,20 +93,17 @@ class TokenInterceptor implements Interceptor {
         }
 
         Log.d("BUMP", "TOKEN RETRIEVED " + token);
+        /** Here we add the the Headers to the API call and insert the newly retrieved Token */
         requestBuilder
                 .addHeader(APP_ID_KEY, APP_ID_VALUE)
                 .addHeader(APP_VERSION_KEY, APP_VERSION_VALUE)
                 .addHeader(API_VERSION_KEY, API_VERSION_VALUE)
                 .addHeader(CONTENT_TYPE_KEY, CONTENT_TYPE_VALUE);
 
-
-                    /* If we are logging in, we don't need the Token */
-        if (!chain.request().url().toString().contains("login")) {
+        if (chain.request().header("No_Authentication") == null) {
 
             requestBuilder
                     .addHeader(AUTHORIZATION_KEY, BEARER + token);
-
-                        /* else, we are doing another endpoint, so we need the bearer*/
         }
 
         return requestBuilder

@@ -70,11 +70,12 @@ public class RestService {
 
         return new OkHttpClient.Builder()
                 .addInterceptor(httpLoggingInterceptor)
+                /** Here we are adding the TokenInterceptor.class to listen for a 401 error */
                 .addInterceptor(new TokenInterceptor(INSTANCE))
                 .build();
     }
 
-    /* Returning the message from the server (whether succesful or otherwise)
+    /* Returning the message from the server (whether successful or otherwise)
     * This is sent to the code that started the connection within onError or onNext for example. */
     public Observable<UserResponse> loginUser(LoginBody loginBody) {
         // Here we receive the response, (which is the UserReponse which is already parsed when it arrives here,

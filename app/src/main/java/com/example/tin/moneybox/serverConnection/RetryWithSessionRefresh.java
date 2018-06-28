@@ -20,7 +20,12 @@ class RetryWithSessionRefresh implements Function<Observable<? extends Throwable
 
         // If this fails after 3 attempts it will be sent to onError which is in the LoginActivity/Presenter
         return attempts
-                .flatMap((Function<Throwable, Observable<?>>) throwable -> sessionSerivce.observeToken()
-                        .retryWhen(new RetryWithDelay(maxRetries, delay)));
+                .flatMap(new Function<Throwable, Observable<?>>() {
+                    @Override
+                    public Observable<?> apply(Throwable throwable) throws Exception {
+                        return sessionSerivce.observeToken()
+                                .retryWhen(new RetryWithDelay(maxRetries, delay));
+                    }
+                });
     }
 }
